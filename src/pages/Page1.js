@@ -7,6 +7,7 @@ export function Page1() {
   const state = useSelector((state) => state);
 
   const increment = () => {
+    // DIPATCHING THE ACTION
     dispatch(incrementAction());
   };
 
