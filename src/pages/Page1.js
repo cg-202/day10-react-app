@@ -1,19 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
+import { decrementAction, incrementAction } from "../redux/store";
 
 export function Page1() {
   const dispatch = useDispatch();
   // we are slelecting every things.
   const state = useSelector((state) => state);
 
-  // filter out :: t-shirt :: counter
-  const counter = useSelector((state) => state.counter);
-
   const increment = () => {
-    dispatch({ type: "INCREMENT" });
+    dispatch(incrementAction());
   };
 
   const decrement = () => {
-    dispatch({ type: "DECREMENT" });
+    dispatch(decrementAction());
   };
 
   return (

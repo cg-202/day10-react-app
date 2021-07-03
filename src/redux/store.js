@@ -5,6 +5,15 @@ const initState = {
   todoList: [],
 };
 
+// DEFINE YOUR REUSABLE ACTIONS
+export function incrementAction() {
+  return { type: "INCREMENT" };
+}
+
+export function decrementAction() {
+  return { type: "DECREMENT" };
+}
+
 function AppReducer(state = initState, action) {
   switch (action.type) {
     case "INCREMENT":
