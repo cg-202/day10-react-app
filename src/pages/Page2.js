@@ -12,7 +12,8 @@ export function Page2() {
   };
 
   const addNewTodo = () => {
-    dispatch(addTodoAction());
+    dispatch(addTodoAction(inputText));
+    setInputText("");
   };
 
   const increment = () => {
