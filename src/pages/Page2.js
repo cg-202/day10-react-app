@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addTodoAction, incrementAction } from "../redux/store";
+import {
+  addTodoAction,
+  getTodoListAction,
+  incrementAction,
+} from "../redux/store";
 
 export function Page2() {
   const dispatch = useDispatch();
@@ -20,6 +24,10 @@ export function Page2() {
     dispatch(incrementAction());
   };
 
+  const getTodoList = () => {
+    dispatch(getTodoListAction());
+  };
+
   return (
     <div>
       <h1>Page2</h1>
@@ -30,6 +38,13 @@ export function Page2() {
         value="Increment"
         onClick={increment}
         className="btn btn-secondary w-100 mb-2"
+      />
+
+      <input
+        type="button"
+        value="MAKE API CALL GET"
+        onClick={getTodoList}
+        className="btn btn-info w-100 mb-2"
       />
 
       <input
@@ -50,6 +65,13 @@ export function Page2() {
       {state.todoList.map((item, index) => (
         <div key={index} className="alert alert-secondary">
           {item}
+        </div>
+      ))}
+
+      <h1>Server Todos</h1>
+      {state.serverTodoList.map((item, index) => (
+        <div key={index} className="alert alert-secondary">
+          {item.title}
         </div>
       ))}
     </div>

@@ -1,15 +1,18 @@
 import { createStore, applyMiddleware } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
+import axios from "axios";
 
 const initState = {
   counter: 100,
   todoList: [],
+  serverTodoList: [],
 };
 
 // DEFINE YOUR REUSABLE ACTIONS
-const INCREMENT_ACTION_TYPE = "INCREMENT";
-const DECREMENT_ACTION_TYPE = "DECREMENT";
-const ADD_TODO_ACTION_TYPE = "ADD_TODO";
+const INCREMENT_ACTION_TYPE = "INCREMENT_ACTION_TYPE";
+const DECREMENT_ACTION_TYPE = "DECREMENT_ACTION_TYPE";
+const ADD_TODO_ACTION_TYPE = "ADD_TODO_ACTION_TYPE";
+const GET_SERVER_TODO_ACTION_TYPE = "GET_SERVER_TODO_ACTION_TYPE";
 
 export function incrementAction() {
   // WE ARE ONLY UPDTING THE UI
@@ -26,6 +29,20 @@ export function addTodoAction(payload) {
   return { type: ADD_TODO_ACTION_TYPE, payload: payload };
 }
 
+// THIS ACTION WILL GET YOU THE DATA FROM THE SERVER.
+// NETWORK CALL :: RETURNS ARROW FUNCTION.
+export function getTodoListAction() {
+  return async (dispatch) => {
+    // API CALL
+    const url = `https://jsonplaceholder.typicode.com/todos`; // THIS WILL BE OUR SERVIER API
+    const response = await axios.get(url); // this is a nework call.
+
+    // UPDATE THE UI
+    // console.log(response.data);
+    dispatch({ type: GET_SERVER_TODO_ACTION_TYPE, payload: response.data });
+  };
+}
+
 // ACTION :: TYPE & PAYLOAD
 function AppReducer(state = initState, action) {
   switch (action.type) {
@@ -39,6 +56,9 @@ function AppReducer(state = initState, action) {
     case ADD_TODO_ACTION_TYPE:
       const newtodoList = [action.payload, ...state.todoList];
       return { ...state, todoList: newtodoList };
+
+    case GET_SERVER_TODO_ACTION_TYPE:
+      return { ...state, serverTodoList: action.payload };
 
     default:
       return state;
