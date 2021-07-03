@@ -1,9 +1,19 @@
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { incrementAction } from "../redux/store";
+import { addTodoAction, incrementAction } from "../redux/store";
 
 export function Page2() {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
+
+  const [inputText, setInputText] = useState("");
+  const updateInputText = (e) => {
+    setInputText(e.target.value);
+  };
+
+  const addNewTodo = () => {
+    dispatch(addTodoAction());
+  };
 
   const increment = () => {
     dispatch(incrementAction());
@@ -18,15 +28,29 @@ export function Page2() {
         type="button"
         value="Increment"
         onClick={increment}
+        className="btn btn-secondary w-100 mb-2"
+      />
+
+      <input
+        type="text"
+        value={inputText}
+        onChange={updateInputText}
+        placeholder="Enter Todo"
+        className="form-control form-control-lg mb-1"
+      />
+      <input
+        type="button"
+        value="Add New Todo"
+        onClick={addNewTodo}
         className="btn btn-secondary w-100 mb-1"
       />
 
-      <p>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae
-        odio blanditiis ratione quaerat deleniti possimus iusto quo? Quos iure
-        voluptatibus eveniet debitis repellat corrupti quis error quisquam cum.
-        Cupiditate, mollitia!
-      </p>
+      <h1>All Todos</h1>
+      {state.todoList.map((item, index) => (
+        <div key={index} className="alert alert-secondary">
+          {item}
+        </div>
+      ))}
     </div>
   );
 }
