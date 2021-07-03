@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -27,6 +28,9 @@ export function Page2() {
   const getTodoList = () => {
     dispatch(getTodoListAction());
   };
+
+  // constructor ::
+  useEffect(() => dispatch(getTodoListAction()), []);
 
   return (
     <div>
